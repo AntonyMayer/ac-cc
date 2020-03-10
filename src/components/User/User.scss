@@ -1,0 +1,21 @@
+@import '../../styles/base';
+
+.User {
+    align-items: baseline;
+    display: flex;
+    justify-content: flex-start;
+
+    &__initials {
+        $diameter: 22px;
+
+        background-color: $lavender;
+        border-radius: 50%;
+        color: $slate-0;
+        height: $diameter;
+        margin-right: 8px;
+        overflow: hidden;
+        padding-top: 3px;
+        text-align: center;
+        width: $diameter;
+    }
+}

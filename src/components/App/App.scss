@@ -1,0 +1,13 @@
+@import '../../styles/base';
+
+body {
+    color: $slate-2;
+    font-family: $font-family;
+    font-size: $font-size;
+    font-weight: $font-weight;
+    padding: 5vmin;
+    
+    * {
+        box-sizing: border-box;
+    }
+}
