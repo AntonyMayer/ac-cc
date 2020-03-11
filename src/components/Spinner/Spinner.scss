@@ -1,0 +1,16 @@
+.Spinner {
+    $size: 40px;
+
+    animation: spin .6s linear infinite;
+    background-image: url('./Spinner.png');
+    background-size: contain;
+    border-radius: 50%;
+    height: $size;
+    margin: 0 auto;
+    width: $size;
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+}

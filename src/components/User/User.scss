@@ -1,20 +1,20 @@
 @import '../../styles/base';
 
 .User {
-    align-items: baseline;
+    align-items: center;
     display: flex;
     justify-content: flex-start;
 
     &__initials {
-        $diameter: 22px;
+        $diameter: 25px;
 
-        background-color: $lavender;
+        background-color: $color-lavender;
         border-radius: 50%;
-        color: $slate-0;
+        color: $color-slate-0;
         height: $diameter;
         margin-right: 8px;
         overflow: hidden;
-        padding-top: 3px;
+        padding-top: 4px;
         text-align: center;
         width: $diameter;
     }

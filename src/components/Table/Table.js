@@ -2,11 +2,12 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Spinner } from '../Spinner';
 import TableRow from './TableRow';
+import TableMessage from './TableMessage';
 import { ROW_TYPES } from './constants';
 import './Table.scss';
 
-const Table = ({ isLoading, headers, rows }) => {
-  const tableMarkup = (
+const Table = ({ headers, rows, isLoading, error }) => {
+  let markup = (
     <table className="Table">
       <thead>
           <TableRow row={headers} type={ROW_TYPES.HEADER} />
@@ -17,13 +18,22 @@ const Table = ({ isLoading, headers, rows }) => {
     </table>
   );
 
-  return isLoading ? <Spinner /> : tableMarkup;
-}
+  if (isLoading) {
+    markup = <TableMessage Component={Spinner} />;
+  }
+
+  if (error) {
+    markup = <TableMessage message={error.message} />;
+  }
+
+  return markup;
+} 
 
 Table.propTypes = {
-  isLoading: PropTypes.bool,
   headers: PropTypes.array,
-  rows: PropTypes.array
+  rows: PropTypes.array,
+  isLoading: PropTypes.bool,
+  error: PropTypes.object
 };
 
 export default Table;

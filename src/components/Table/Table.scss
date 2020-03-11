@@ -1,7 +1,13 @@
 @import '../../styles/base';
 
 .Table {
-    border: 1px solid $slate-3;
+    animation: dislpay .6s;
+    border: 2px solid $color-slate-6;
     border-collapse: collapse;
     width: 100%;
+
+    @keyframes dislpay {
+        0% { opacity: 0 }
+        100% { opacity: 1 }
+    }
 }

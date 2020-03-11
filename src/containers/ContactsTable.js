@@ -5,20 +5,22 @@ import { CELL_TYPES } from '../components/Table/constants';
 import { fetchResource } from '../utils/fetchResource';
 import { RESOURCES } from '../utils/constants';
 
-function TableContacts() {
+const TableContacts = () => {
   const [ isLoading, setLoading ] = useState(true);
   const [ rows, setRows ] = useState([]);
-  const [ error, setError ] = useState({});
+  const [ error, setError ] = useState(null);
 
   const headers = [ 
     { id: 'contact', value: 'Contact' }, 
+    { id: 'organization', value: 'Organization' },
     { id: 'email', value: 'Email' },
     { id: 'phone', value: 'Phone' },
+    { id: 'deals', value: 'Deals' },
     { id: 'created', value: 'Created' },
   ];
 
   const transformData = contacts => contacts.map(({ 
-    email, firstName, id, lastName, phone, cdate
+    email, firstName, id, lastName, phone, cdate, orgname, deals
   }) => ({
     id,
     row: [ 
@@ -34,6 +36,10 @@ function TableContacts() {
         }
       },
       {
+        id: `orgname_${id}`,
+        value: orgname
+      },
+      {
         id: `email_${id}`,
         value: email
       },
@@ -42,25 +48,31 @@ function TableContacts() {
         value: phone
       },
       {
+        id: `deals_${id}`,
+        value: deals.length
+      },
+      {
         id: `created_${id}`,
         value: (new Date(cdate)).toLocaleString()
       }
     ]
   }));
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { contacts } = await fetchResource(RESOURCES.CONTACTS, 'include=deals');
+        const parsedData = transformData(contacts);
+        setRows(parsedData);
+      } catch (e) {
+        setError(e);
+      }
   
-  const fetchData = async () => {
-    try {
-      const { contacts } = await fetchResource(RESOURCES.CONTACTS);
-      const parsedData = transformData(contacts);
-      setRows(parsedData);
-    } catch (e) {
-      setError(e)
-    }
+      setLoading(false);
+    };
 
-    setLoading(false);
-  };
-
-  useEffect(() => { fetchData(); }, []);
+    fetchData();
+  }, []);
 
   return <Table 
     isLoading={isLoading} 

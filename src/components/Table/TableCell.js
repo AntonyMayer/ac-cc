@@ -4,10 +4,10 @@ import { CELL_TYPES } from './constants';
 import './TableCell.scss';
 
 const TableCell = ({ value, type }) => {
-  let content = value;
+  let content = value.toString();
 
   if (type === CELL_TYPES.CUSTOM) {
-    const { props, Component } = value;
+    const { Component, props } = value;
     content = <Component {...props} />
   }
 
@@ -19,7 +19,7 @@ const TableCell = ({ value, type }) => {
 }
 
 TableCell.propTypes = {
-  // value: PropTypes.one,
+  value: PropTypes.any,
   type: PropTypes.string
 };
 
