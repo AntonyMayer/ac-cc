@@ -4,4 +4,20 @@
     border-top: 2px solid $color-slate-6;
     height: 46px;
     padding: 0 12px;
+
+    &__content {
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &--overflown {
+            cursor: pointer;
+        }
+
+        &--open {
+            max-width: 100%;
+            white-space: initial;
+        }
+    }
 }

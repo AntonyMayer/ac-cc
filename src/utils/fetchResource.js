@@ -14,3 +14,5 @@ export const fetchResource = (resourceName, query) => {
     .then(res => res.json())
     .catch(e => { throw new Error(e); });
 }
+
+export default fetchResource;

@@ -13,9 +13,12 @@
         color: $color-slate-0;
         height: $diameter;
         margin-right: 8px;
+        min-height: $diameter;
+        min-width: $diameter;
         overflow: hidden;
-        padding-top: 4px;
+        padding: 3.5px;
         text-align: center;
         width: $diameter;
+        white-space: normal;
     }
 }

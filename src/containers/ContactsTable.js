@@ -2,25 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { Table } from '../components/Table';
 import { User } from '../components/User';
 import { CELL_TYPES } from '../components/Table/constants';
-import { fetchResource } from '../utils/fetchResource';
+import { fetchResource, getContactValue, getContactTags } from '../utils';
 import { RESOURCES } from '../utils/constants';
 
-const TableContacts = () => {
+const ContactsTable = () => {
   const [ isLoading, setLoading ] = useState(true);
   const [ rows, setRows ] = useState([]);
   const [ error, setError ] = useState(null);
 
   const headers = [ 
     { id: 'contact', value: 'Contact' }, 
-    { id: 'organization', value: 'Organization' },
-    { id: 'email', value: 'Email' },
-    { id: 'phone', value: 'Phone' },
+    { id: 'total_value', value: 'Total Value' },
     { id: 'deals', value: 'Deals' },
-    { id: 'created', value: 'Created' },
+    { id: 'tags', value: 'Tags' }
   ];
 
-  const transformData = contacts => contacts.map(({ 
-    email, firstName, id, lastName, phone, cdate, orgname, deals
+  const transformData = (contacts, deals, contactTags, tags) => contacts.map(({ 
+    firstName, id, lastName, deals: contactDeals, contactTags: currentTags
   }) => ({
     id,
     row: [ 
@@ -36,24 +34,16 @@ const TableContacts = () => {
         }
       },
       {
-        id: `orgname_${id}`,
-        value: orgname
-      },
-      {
-        id: `email_${id}`,
-        value: email
-      },
-      {
-        id: `phone_${id}`,
-        value: phone
+        id: `total_value_${id}`,
+        value: getContactValue(id, deals)
       },
       {
         id: `deals_${id}`,
-        value: deals.length
+        value: contactDeals.length
       },
       {
-        id: `created_${id}`,
-        value: (new Date(cdate)).toLocaleString()
+        id: `tags_${id}`,
+        value: getContactTags(currentTags, contactTags, tags)
       }
     ]
   }));
@@ -61,8 +51,12 @@ const TableContacts = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { contacts } = await fetchResource(RESOURCES.CONTACTS, 'include=deals');
-        const parsedData = transformData(contacts);
+        const { contacts, deals, contactTags, tags } = await fetchResource(
+          RESOURCES.CONTACTS,
+          'include=deals,contactTags.tag,notes'
+          // 'bounceLogs,contactAutomations,contactGoals,contactLogs,contactTags,contactDeals,fieldValues,notes,organization,plusAppend,trackingLogs,accountContacts'
+        );
+        const parsedData = transformData(contacts, deals, contactTags, tags);
         setRows(parsedData);
       } catch (e) {
         setError(e);
@@ -82,4 +76,4 @@ const TableContacts = () => {
   />
 }
 
-export default TableContacts;
+export default ContactsTable;
