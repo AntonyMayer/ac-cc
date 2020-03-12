@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table } from '../components/Table';
 import { User } from '../components/User';
 import { CELL_TYPES } from '../components/Table/constants';
-import { fetchResource, getContactValue, getContactTags } from '../utils';
+import { fetchResource, getContactValue, getContactTags, getLocation } from '../utils';
 import { RESOURCES } from '../utils/constants';
 
 const ContactsTable = () => {
@@ -13,12 +13,13 @@ const ContactsTable = () => {
   const headers = [ 
     { id: 'contact', value: 'Contact' }, 
     { id: 'total_value', value: 'Total Value' },
+    { id: 'location', value: 'Location' },
     { id: 'deals', value: 'Deals' },
     { id: 'tags', value: 'Tags' }
   ];
 
   const transformData = (contacts, deals, contactTags, tags) => contacts.map(({ 
-    firstName, id, lastName, deals: contactDeals, contactTags: currentTags
+    firstName, id, lastName, deals: contactDeals, contactTags: currentTags, ip
   }) => ({
     id,
     row: [ 
@@ -36,6 +37,10 @@ const ContactsTable = () => {
       {
         id: `total_value_${id}`,
         value: getContactValue(id, deals)
+      },
+      {
+        id: `location_${id}`,
+        value: getLocation(ip)
       },
       {
         id: `deals_${id}`,

@@ -7,7 +7,7 @@ const TableCell = ({ value, type }) => {
   const cellContent = React.createRef();
   let [ isOverflown, setOverflown ] = useState(false);
   let [ isOpen, setOpen ] = useState(false);
-  let content = value;
+  let content = value.toString();
 
   if (type === CELL_TYPES.CUSTOM) {
     const { Component, props } = value;

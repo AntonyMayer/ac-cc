@@ -1,6 +1,14 @@
-const formatCurrency = number => {
+const formatCurrency = (number, currency) => {
+    const currencyMap = {
+        usd: '$'
+    };
+
+    const symbol = currencyMap[currency]
+        ? ' ' + currencyMap[currency]
+        : '';
+
     return number
-        ? number.toLocaleString() + ' $'
+        ? number.toLocaleString() + symbol
         : '- - -';
 };
 
