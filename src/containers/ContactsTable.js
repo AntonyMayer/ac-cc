@@ -58,8 +58,7 @@ const ContactsTable = () => {
       try {
         const { contacts, deals, contactTags, tags } = await fetchResource(
           RESOURCES.CONTACTS,
-          'include=deals,contactTags.tag,notes'
-          // 'bounceLogs,contactAutomations,contactGoals,contactLogs,contactTags,contactDeals,fieldValues,notes,organization,plusAppend,trackingLogs,accountContacts'
+          'include=deals,contactTags.tag'
         );
         const parsedData = transformData(contacts, deals, contactTags, tags);
         setRows(parsedData);
